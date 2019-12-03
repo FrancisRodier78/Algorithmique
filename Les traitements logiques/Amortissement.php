@@ -1,41 +1,40 @@
 <?php
 	// Saisie des données initiales
-	var $Capital = 100000;
-	var $NbAn = 12;
-	var $TauxAnnuel = 2.3;
-	var $TauxAssurance = 0.35;
+	$Capital = 100000;
+	$NbAn = 12;
+	$TauxAnnuel = 2.3;
+	$TauxAssurance = 0.35;
 
 	// Calculs
-	$NbMois = NbAn*12;
-	$TauxMensuel = (TauxAnnuel/100)/12;
- 	$calcul1 = Capital*TauxMensuel;
-	$calcul2 = (1+TauxMensuel)**NbMois;
-	$calcul3 = calcul2-1;
-	$CoutAss = (Capital*(TauxAssurance/100)/12);
-	$MensualiteHA = (calcul1*(calcul2*calcul3));
-	$MensualiteAC = MensualitéHA+CoutAss;
+	$NbMois = $NbAn*12;
+	$TauxMensuel = ($TauxAnnuel / 100) / 12;
+ 	$calcul1 = $Capital * $TauxMensuel;
+	$calcul2 = (1 + $TauxMensuel) ** $NbMois;
+	$calcul3 = $calcul2 - 1;
+	$CoutAss = ($Capital * ($TauxAssurance / 100) / 12);
+	$MensualiteHA = ($calcul1 * ($calcul2 * $calcul3));
+	$MensualiteAC = $MensualiteHA + $CoutAss;
 
 	// Affichage de la mensualité
-	echo "string";
-	echo "Mensualité Hors Assurance : ", $MensualiteHA;
-	echo "Coût Assurance par mois : ", $CoutAss;
-	echo "Mensualité Aves Assurance : ", $MensualiteAC;
+	echo 'Mensualité Hors Assurance : ' . $MensualiteHA . '<br />';
+	echo 'Coût Assurance par mois : ' . $CoutAss . '<br />';
+	echo 'Mensualité Aves Assurance : ' . $MensualiteAC . '<br />';
 
 	// Affichage de tableau d’amortissement
 	$CapRestant = $Capital;
-	printf ("Mensualité", "Amortissement", "Intérêt", "Capital", "Ass.");
+	printf ('/ Mensualité     / Amortissement  / Intérêt        / Capital        / Ass.           /' . '<br />');
 
-	for ($i=0;$i < NbMois; $i++) { 
+	for ($i=0;$i < $NbMois; $i++) { 
 		$calcul1 = $CapRestant * $TauxMensuel;
-		$Calcul2 = (1 + $TauxMensuel) ** ($NbMois - i);
-		$Calcul3 = $calcul2 - 1;
+		$calcul2 = (1 + $TauxMensuel) ** ($NbMois - $i);
+		$calcul3 = $calcul2 - 1;
 		$MensualitéHA = ($calcul1 * ($calcul2 / $calcul3));
 		$MensualitéAC = $MensualitéHA + $CoutAss;
-		$Intérêt = $calcul1;
-		$Amortiss = $MensualitéHA - $Intérêts;
+		$Interet = $calcul1;
+		$Amortiss = $MensualiteHA - $Interet;
 		$CapRestant = $CapRestant - $Amortiss;
 
-		printf(MensualitéAC, ’’ ‘’, Amortiss, ‘’ ‘’, Intérêts, ‘’ ‘’, CapRestant, ‘’ ‘’, CoutAss);
+		printf(" / " . $MensualiteAC . " / " . $Amortiss . " / " . $Interet . " / " . $CapRestant . " / " . $CoutAss . " / " . '<br />');
 	}
 
 	// $ php Amortissement.php
