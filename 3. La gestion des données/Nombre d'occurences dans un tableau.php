@@ -30,3 +30,30 @@ for ($i=0; $i < $nbelement; $i++) {
 	}
 }
 ?>
+
+<?php
+// Saisie des notes
+echo "Entrez une liste de nombres entier positifs".PHP_EOL;
+echo "avec et sans doublons".PHP_EOL;
+$saisie = fgets(STDIN);
+
+// Suppression des espaces et du saut de ligne
+$saisie = trim($saisie);
+
+$tab = explode(' ', $saisie);
+
+$nbelement = count($tab);
+for ($i=0; $i < $nbelement; $i++) { 
+	$val = $tab[$i];
+	if (isset($tab-occ[$val])) {
+		$tab-occ[$val]++;
+	} else {
+		$tab-occ[$val] = 1;
+	}
+
+	ksort($tab-occ);
+	foreach ($tab-occ as $i => $val) {
+		printf("%5d : %3d occurence(s)\n",$i,$val);
+	}
+}
+?>
