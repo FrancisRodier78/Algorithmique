@@ -45,14 +45,14 @@ $tab = explode(' ', $saisie);
 $nbelement = count($tab);
 for ($i=0; $i < $nbelement; $i++) { 
 	$val = $tab[$i];
-	if (isset($tab-occ[$val])) {
-		$tab-occ[$val]++;
+	if (isset($tabocc[$val])) {
+		$tabocc[$val]++;
 	} else {
-		$tab-occ[$val] = 1;
+		$tabocc[$val] = 1;
 	}
 
-	ksort($tab-occ);
-	foreach ($tab-occ as $i => $val) {
+	ksort($tabocc);
+	foreach ($tabocc as $i => $val) {
 		printf("%5d : %3d occurence(s)\n",$i,$val);
 	}
 }
