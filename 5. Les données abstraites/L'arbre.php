@@ -19,7 +19,7 @@ class CNoeud {
 	}
 
 	public function change_donnee($c) {
-		$this->donnee = $c
+		$this->donnee = $c;
 	}
 
 	public function gauche() {
@@ -102,12 +102,12 @@ class CArbre {
 		$UneFile->enfiler($noeud_courant);
 		while (!$UneFile->vide()) {
 			$noeud_courant = $UneFile->defiler();
-			if ($noeud_courant->gauche( != null)) {
+			if ($noeud_courant->gauche() != null) {
 				$UneFile->enfiler($noeud_courant->gauche());
 			}
 
 			$noeud_courant = $UneFile->defiler();
-			if ($noeud_courant->droit( != null)) {
+			if ($noeud_courant->droit() != null) {
 				$UneFile->enfiler($noeud_courant->droit());
 			}
 		}
@@ -119,7 +119,7 @@ class CPile {
 	private $nbelements;
 
 	public function __construct() {
-		$this->pile = $array();
+		$this->pile = array();
 		$this->nbelements = 0;
 	}
 
@@ -127,8 +127,8 @@ class CPile {
 		$this->nbelements = 0;	
 	}
 
-	function empiler(elements) {
-		$this->pile[$this->nbelements] = $elements:
+	function empiler($elements) {
+		$this->pile[$this->nbelements] = $elements;
 		$this->nbelements++;
 	}
 
@@ -182,3 +182,43 @@ class CFile {
 	}
 }
 
+$UnePile = new CPile();
+$UnePile->initialiser_pile();
+$UnArbre = new CArbre();
+
+echo "Entrez une expression postifixée : ";
+$phrase = trim(fgets(STDIN));
+$nbcaract = strlen($phrase);
+for ($i=0; $i < $nbcaract; $i++) { 
+	$caract = $phrase[$i];
+	$nouveau_moeud = new CNoeud($caract);
+
+	if (($caract == '+') || ($caract == '-') || ($caract == '/') || ($caract == '*')) {
+		$nouveau_moeud->change_droit($UnePile->depiler());
+		$nouveau_moeud->change_gauche($UnePile->depiler());
+		$UnePile->empiler($nouveau_moeud);
+	} else {
+		if ($caract != ' ') {
+			$UnePile->empiler($nouveau_moeud);
+		}
+	}
+}
+
+$UnArbre->change_racine($UnePile->depiler());
+
+echo "Parcour Préfixe : ";
+$UnArbre->ParcoursPrefixe($UnArbre->val_racine(),' ');
+echo "PHP_EOL";
+
+echo "Parcour Infixe : ";
+$UnArbre->ParcoursInfixe($UnArbre->val_racine(),' ');
+echo "PHP_EOL";
+
+echo "Parcour Postfixe : ";
+$UnArbre->ParcoursPostfixe($UnArbre->val_racine(),' ');
+echo "PHP_EOL";
+
+echo "Parcour par niveaux : ";
+$UnArbre->ParcoursParNiveaux($UnArbre->val_racine(),' ');
+echo "PHP_EOL";
+?>
