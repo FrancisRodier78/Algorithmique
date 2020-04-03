@@ -97,18 +97,17 @@ class CArbre {
 	}
 
 	public function ParcoursParNiveaux(CNoeud $noeud_courant, $separateur) {
-		$UneFile = new CFile;
-		$UneFile->initialiser_file();
-		$UneFile->enfiler($noeud_courant);
-		while (!$UneFile->vide()) {
-			$noeud_courant = $UneFile->defiler();
+		$UneFile = new SplQueue();
+		$UneFile->enqueue($noeud_courant);
+		while (!$UneFile->isEmpty()) {
+			$noeud_courant = $UneFile->dequeue();
 			if ($noeud_courant->gauche() != null) {
-				$UneFile->enfiler($noeud_courant->gauche());
+				$UneFile->enqueue($noeud_courant->gauche());
 			}
 
 			$noeud_courant = $UneFile->defiler();
 			if ($noeud_courant->droit() != null) {
-				$UneFile->enfiler($noeud_courant->droit());
+				$UneFile->enqueue($noeud_courant->droit());
 			}
 		}
 	}
@@ -182,8 +181,7 @@ class CFile {
 	}
 }
 
-$UnePile = new CPile();
-$UnePile->initialiser_pile();
+$UnePile = new SplStack();
 $UnArbre = new CArbre();
 
 echo "Entrez une expression postifixée : ";
@@ -194,17 +192,17 @@ for ($i=0; $i < $nbcaract; $i++) {
 	$nouveau_moeud = new CNoeud($caract);
 
 	if (($caract == '+') || ($caract == '-') || ($caract == '/') || ($caract == '*')) {
-		$nouveau_moeud->change_droit($UnePile->depiler());
-		$nouveau_moeud->change_gauche($UnePile->depiler());
-		$UnePile->empiler($nouveau_moeud);
+		$nouveau_moeud->change_droit($UnePile->pop());
+		$nouveau_moeud->change_gauche($UnePile->pop());
+		$UnePile->push($nouveau_moeud);
 	} else {
 		if ($caract != ' ') {
-			$UnePile->empiler($nouveau_moeud);
+			$UnePile->push($nouveau_moeud);
 		}
 	}
 }
 
-$UnArbre->change_racine($UnePile->depiler());
+$UnArbre->change_racine($UnePile->pop());
 
 echo "Parcour Préfixe : ";
 $UnArbre->ParcoursPrefixe($UnArbre->val_racine(),' ');
