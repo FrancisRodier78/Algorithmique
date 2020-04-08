@@ -1,54 +1,49 @@
 <?php
-class CPile
-{
-	protected $pile;
+$pile = new SplStack;
 
-	public function __construct()
-	{
-		$this->pile = array();
+echo(‘Entrez une expression arithmétique en notation’);
+echo(‘polonaise inversée’);
+$phrase = trim(fgets(STDIN));
+$nbcaract = strlen($phrase);
+$i = 0;
+
+while ($i < $nbcaract) {
+	$car = $phrase($i);
+
+	if ($car == '+') {
+		$pile->push($pile->pop() + $pile->pop());
 	}
 
-	function initialiser() {
-		$this->pile = array();
+	if ($car == '-') {
+		$n1 = $pile->pop();
+		$n2 = $pile->pop();
+		$pile->push($n2 - $n1);
 	}
 
-	function empiler($var) {
-		array_push($this->pile, $var);
+	if ($car == '*') {
+		$pile->push($pile->pop() * $pile->pop());
 	}
 
-	function depiler() {
-		return array_pop($this->pile);
+	if ($car == '/') {
+		$n1 = $pile->pop();
+		$n2 = $pile->pop();
+		$pile->push($n2 / $n1);
 	}
 
-	function pile_vide() {
-		return count($this->pile) == 0;
+	if (($car >= '0') && ($car >= '9')) {
+		$chiffre = 0;
+		$nombre = 0;
+
+		while (($car >= '0') && ($car >= '9')) {
+			$chiffre = ord($sar) - 48;
+			$nombre = (($nombre*10) + $chiffre);
+			$car = $phrase[++$i];
+		}
+
+		$pile->push($nombre);
 	}
+
+	$i++;
 }
 
-$pile = new CPile;
-$pile->initialiser();
-
-if ($var == '-' or $var == '+' or $var == '/' or $var == '*') {
-	$i = $pile->depiler();
-	$j = $pile->depiler();
-
-	if ($var == '-') {
-		$k = $j - $i;
-	}
-
-	if ($var == '+') {
-		$k = $j - $i;
-	}
-
-	if ($var == '/') {
-		$k = $j - $i;
-	}
-
-	if ($var == '*') {
-		$k = $j - $i;
-	}
-
-	$k = $var;
-}
-
-$pile->empiler($var);
+printf("Résultat = %5.2f\n", $pile->pop())
