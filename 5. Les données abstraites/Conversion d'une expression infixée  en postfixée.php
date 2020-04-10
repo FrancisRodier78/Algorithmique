@@ -11,9 +11,8 @@ $i ) 0;
 while ($i < $nbcaract) {
 	$car = $phrase[$i];
 
-	if ($car == ')') {
-		$fileExpr->enqueue(' ');
-		$fileExpr->enqueue($pileOper->pop());
+	if (($car >= '0') && ($car <= '9')) {
+		$fileExpr->enqueue($car);
 	}
 
 	if (($car == '+') || ($car == '-') || ($car == '*') || ($car == '/')) {
@@ -21,10 +20,12 @@ while ($i < $nbcaract) {
 		$pileOper->push($acr);
 	}
 
-	if (($car >= '0') && ($car <= '9')) {
-		$fileExpr->enqueue($car);
-		$i++;
+	if ($car == ')') {
+		$fileExpr->enqueue(' ');
+		$fileExpr->enqueue($pileOper->pop());
 	}
+
+	$i++;
 }
 
 while (!$pileOper->isEmpty()) {
