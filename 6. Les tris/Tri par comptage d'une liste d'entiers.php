@@ -1,9 +1,3 @@
-Début
-	Pour i variant de 0 à nb – 1 Faire
-		Tab[i] == temp[i]
-	FinPour
-Fin
-
 <?php
 function Tri_par_comptage() {
 	$compteur = array();
