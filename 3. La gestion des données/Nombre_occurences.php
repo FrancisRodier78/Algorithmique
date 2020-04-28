@@ -2,7 +2,8 @@
 // Saisie des notes
 echo "Entrez une liste de nombres entier positifs".PHP_EOL;
 echo "avec et sans doublons".PHP_EOL;
-$saisie = fgets(STDIN);
+//$saisie = fgets(STDIN);
+$saisie = "1 2 3 12 2";
 
 // Suppression des espaces et du saut de ligne
 $saisie = trim($saisie);
@@ -10,6 +11,11 @@ $saisie = trim($saisie);
 $tab = explode(' ', $saisie);
 
 $nbelement = count($tab);
+for ($i=0; $i < $nbelement; $i++) { 
+	echo $tab[$i]." ";
+}
+echo PHP_EOL;
+
 for ($i=0; $i < $nbelement; $i++) { 
 	// on vérifie que cet élément n’a pas déjà été traité
 	$trouvé = False;
@@ -21,39 +27,11 @@ for ($i=0; $i < $nbelement; $i++) {
 
 	if (!$trouvé) {
 		$occurrences = 1;
-		for ($k=$i+1; $k < $nbelement; $k++) { 
-			if ($tab[$i] == $tab[$j]) {
-				$occurrences++;
-			}
+		for ($j=$i+1; $j < $nbelement; $j++) { 
+			$occurrences += ($tab[$i] == $tab[$j]);
 		}
-		printf($tab[$i], " : ", $occurrences, " occurrence(s)");
-	}
-}
-?>
-
-<?php
-// Saisie des notes
-echo "Entrez une liste de nombres entier positifs".PHP_EOL;
-echo "avec et sans doublons".PHP_EOL;
-$saisie = fgets(STDIN);
-
-// Suppression des espaces et du saut de ligne
-$saisie = trim($saisie);
-
-$tab = explode(' ', $saisie);
-
-$nbelement = count($tab);
-for ($i=0; $i < $nbelement; $i++) { 
-	$val = $tab[$i];
-	if (isset($tabocc[$val])) {
-		$tabocc[$val]++;
-	} else {
-		$tabocc[$val] = 1;
-	}
-
-	ksort($tabocc);
-	foreach ($tabocc as $i => $val) {
-		printf("%5d : %3d occurence(s)\n",$i,$val);
+		printf(", %5d : %3d occurrence(s)", $tab[$i], $occurrences);
+		echo PHP_EOL;
 	}
 }
 ?>
