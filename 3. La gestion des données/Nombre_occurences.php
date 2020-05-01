@@ -14,7 +14,7 @@ $nbelement = count($tab);
 for ($i=0; $i < $nbelement; $i++) { 
 	echo $tab[$i]." ";
 }
-echo PHP_EOL;
+echo PHP_EOL . '<br />';
 
 for ($i=0; $i < $nbelement; $i++) { 
 	// on vérifie que cet élément n’a pas déjà été traité
@@ -30,8 +30,8 @@ for ($i=0; $i < $nbelement; $i++) {
 		for ($j=$i+1; $j < $nbelement; $j++) { 
 			$occurrences += ($tab[$i] == $tab[$j]);
 		}
-		printf(", %5d : %3d occurrence(s)", $tab[$i], $occurrences);
-		echo PHP_EOL;
+		printf("%5d : %3d occurrence(s)", $tab[$i], $occurrences);
+		echo PHP_EOL . '<br />';
 	}
 }
 ?>

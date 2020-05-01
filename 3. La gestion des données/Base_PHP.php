@@ -1,9 +1,11 @@
 <?php
-echo "Nombre à convertir";;
-fscanf(STDIN, "%d", $nb);
+//echo "Nombre à convertir";
+//fscanf(STDIN, "%d", $nb);
+$nb = 107;
 $nb_initial = $nb;
-echo "Base de conversion";
-fscanf(STDIN, "%d", $base);
+//echo "Base de conversion";
+//fscanf(STDIN, "%d", $base);
+$base = 12;
 
 if (($base > 1) && ($base < 37)) {
 	$quotient = 1;
@@ -22,9 +24,9 @@ if (($base > 1) && ($base < 37)) {
 		$affichage = $digit.$affichage;
 	}
 
-	echo $nb_initial." en base ".$base." = ".$affichage.PHP_EOL;
+	echo $nb_initial . " en base " . $base . " = ".$affichage.PHP_EOL;
 } else {
-	echo "La base doit être comprise entre 2 et 36".PHP_EOL;
+	echo "La base doit être comprise entre 2 et 36" . PHP_EOL;
 }
 
 ?>
