@@ -1,7 +1,7 @@
 <?php
 // Saisie des notes
-echo "Entrez une liste de nombres entier positifs".PHP_EOL;
-echo "avec et sans doublons".PHP_EOL;
+//echo "Entrez une liste de nombres entier positifs".PHP_EOL;
+//echo "avec et sans doublons".PHP_EOL;
 //$saisie = fgets(STDIN);
 $saisie = "1 2 3 12 2";
 
