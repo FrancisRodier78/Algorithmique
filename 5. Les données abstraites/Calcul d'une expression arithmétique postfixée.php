@@ -1,14 +1,16 @@
 <?php
 $pile = new SplStack;
 
-echo(‘Entrez une expression arithmétique en notation’);
-echo(‘polonaise inversée’);
-$phrase = trim(fgets(STDIN));
+echo("Entrez une expression arithmétique en notation") . '<br />';
+echo("polonaise inversée") . '<br />';
+//$phrase = trim(fgets(STDIN));
+//$phrase = "35+45-76-//";
+$phrase = "3 12 3 - 3 / 1 - *";
 $nbcaract = strlen($phrase);
 $i = 0;
 
 while ($i < $nbcaract) {
-	$car = $phrase($i);
+	$car = $phrase[$i];
 
 	if ($car == '+') {
 		$pile->push($pile->pop() + $pile->pop());
@@ -30,12 +32,12 @@ while ($i < $nbcaract) {
 		$pile->push($n2 / $n1);
 	}
 
-	if (($car >= '0') && ($car >= '9')) {
+	if (($car >= '0') && ($car <= '9')) {
 		$chiffre = 0;
 		$nombre = 0;
 
-		while (($car >= '0') && ($car >= '9')) {
-			$chiffre = ord($sar) - 48;
+		while (($car >= '0') && ($car <= '9')) {
+			$chiffre = ord($car) - 48;
 			$nombre = (($nombre*10) + $chiffre);
 			$car = $phrase[++$i];
 		}
@@ -46,4 +48,4 @@ while ($i < $nbcaract) {
 	$i++;
 }
 
-printf("Résultat = %5.2f\n", $pile->pop())
+printf("Résultat = %5.2f\n", $pile->pop()) . '<br />';

@@ -37,7 +37,7 @@ class CNoeud {
 class CArbre {
 	private $racine;
 
-	function __construct(argument) {
+	function __construct() {
 		$this->racine = null;
 	}
 
@@ -62,13 +62,13 @@ class CArbre {
 	public function ParcoursInfixeInverse(CNoeud $NdCourant) {
 		if ($NdCourant != null) {
 			if ($NdCourant->droit() != null) {
-				$this->ParcoursInfixe($NdCourant->droit());
+				$this->ParcoursInfixeInverse($NdCourant->droit());
 			}
 
 			printf("%4d ", $NdCourant->get_val());
 
 			if ($NdCourant->gauche() != null) {
-				$this->ParcoursInfixe($NdCourant->gauche());
+				$this->ParcoursInfixeInverse($NdCourant->gauche());
 			}
 		}
 	}
@@ -77,15 +77,18 @@ class CArbre {
 		$NvNoeud = new CNoeud($nombre);
 
 		if ($this->racine == null) {
-			$this->racine = $Nvnoeud;
+			$this->racine = $NvNoeud;
 			printf("--%4d :racine --", $this->racine->get_val());
-			cho PHP_EOL;
+			echo PHP_EOL . '<br />';
 		} else {
 			$NdCourant = $this->racine;
 
 			while ($NdCourant != null) {
-				if ($Nvnoeud->get_val() $NdCourant->get_val()) {
+				if ($NvNoeud->get_val() < $NdCourant->get_val()) {
 					if ($NdCourant->gauche() == null) {
+                        printf("-- %4d :fils gauche de --", $NvNoeud->get_val());
+                        printf("%4d --", $NdCourant->get_val());
+                        echo PHP_EOL . '<br />';
 						$NdCourant->change_gauche($NvNoeud);
 						$NdCourant = null;
 					} else {
@@ -93,6 +96,9 @@ class CArbre {
 					}
 				} else {
 					if ($NdCourant->droit() == null) {
+                        printf("-- %4d :fils droit de --", $NvNoeud->get_val());
+                        printf("%4d --", $NdCourant->get_val());
+                        echo PHP_EOL . '<br />';
 						$NdCourant->change_droit($NvNoeud);
 						$NdCourant = null;
 					} else {
@@ -108,47 +114,53 @@ class CArbre {
 		$NdCourant = $this->racine;
 
 		while ($NdCourant != null) {
+		    echo "NdCourant == " . $NdCourant->get_val() . '<br />';
 			if ($NdCourant->get_val() == $nombre) {
 				$NdTrouve = $NdCourant;
 				$NdCourant = null;
-			} elseif ($nombre > $NdCourant->get_val()) {
-				$NdCourant = $NdCourant->gauche;
+			} else if ($nombre < $NdCourant->get_val()) {
+				$NdCourant = $NdCourant->gauche();
+                echo "... NdCourant gauche == " . $NdCourant->get_val() . '<br />';
 			} else {
-				$NdCourant = $NdCourant->droit;
+				$NdCourant = $NdCourant->droit();
+                echo "... NdCourant droit == " . $NdCourant->get_val() . '<br />';
 			}
-			
-			return $NdTrouve;
 		}
+
+        return $NdTrouve;
 	}
 }
 
 // === Programme principal ===
 $Arbre = new CArbre;
 
-echo "Entrez une suite de valeur.";
-$saisie = fgets(STDIN;
+//echo "Entrez une suite de valeur.";
+//$saisie = fgets(STDIN);
+$saisie = "2 4 8 6 3 1 7 5 9";
 $saisie = trim($saisie);
+echo "Affichage des données : ".$saisie.PHP_EOL . '<br />';
 $liste_notes = explode(' ', $saisie);
 $nbnotes = count($liste_notes);
 for ($i=0; $i < $nbnotes; $i++) { 
 	$Arbre->insertion_noeud($liste_notes[$i]);
 }
 
-echo "Entrez une valeur à rechercher.";
-fscanf(STDIN, "%d", nb);
+//echo "Entrez une valeur à rechercher.";
+//fscanf(STDIN, "%d", $nb);
+$nb = 5;
 $NdRecherche = $Arbre->recherche_arbre($nb);
 if ($NdRecherche != null) {
-	echo nb." trouvé".PHP_EOL;
+	echo $nb." trouvé".PHP_EOL . '<br />';
 } else {
-	echo nb." non trouvé".PHP_EOL;
+	echo $nb." non trouvé".PHP_EOL . '<br />';
 }
 
-echo "Affichage des données triées : ".PHP_EOL;
-$Arbre->ParcoursInfixe($Arbre->val_racine);
-echo PHP_EOL;
+echo "Affichage des données triées : ".PHP_EOL . '<br />';
+$Arbre->ParcoursInfixe($Arbre->val_racine());
+echo PHP_EOL . '<br />';
 
-echo "Affichage des données triées inversées: ".PHP_EOL;
-$Arbre->ParcoursInfixeInverse($Arbre->val_racine);
-echo PHP_EOL;
+echo "Affichage des données triées inversées: ".PHP_EOL . '<br />';
+$Arbre->ParcoursInfixeInverse($Arbre->val_racine());
+echo PHP_EOL . '<br />';
 
 ?>

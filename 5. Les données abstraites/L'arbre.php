@@ -27,7 +27,7 @@ class CNoeud {
 	}
 
 	public function droit() {
-		return $this->droit;
+		return $this->droite;
 	}
 
 	public function valeur() {
@@ -101,11 +101,12 @@ class CArbre {
 		$UneFile->enqueue($noeud_courant);
 		while (!$UneFile->isEmpty()) {
 			$noeud_courant = $UneFile->dequeue();
+            $noeud_courant->traiter($separateur);
+
 			if ($noeud_courant->gauche() != null) {
 				$UneFile->enqueue($noeud_courant->gauche());
 			}
 
-			$noeud_courant = $UneFile->defiler();
 			if ($noeud_courant->droit() != null) {
 				$UneFile->enqueue($noeud_courant->droit());
 			}
@@ -184,8 +185,9 @@ class CFile {
 $UnePile = new SplStack();
 $UnArbre = new CArbre();
 
-echo "Entrez une expression postifixée : ";
-$phrase = trim(fgets(STDIN));
+//echo "Entrez une expression postifixée : ";
+//$phrase = trim(fgets(STDIN));
+$phrase = "4 5 + 7 8 - 9 6 + / *";
 $nbcaract = strlen($phrase);
 for ($i=0; $i < $nbcaract; $i++) { 
 	$caract = $phrase[$i];
@@ -206,17 +208,17 @@ $UnArbre->change_racine($UnePile->pop());
 
 echo "Parcour Préfixe : ";
 $UnArbre->ParcoursPrefixe($UnArbre->val_racine(),' ');
-echo "PHP_EOL";
+echo PHP_EOL . '<br />';
 
 echo "Parcour Infixe : ";
 $UnArbre->ParcoursInfixe($UnArbre->val_racine(),' ');
-echo "PHP_EOL";
+echo PHP_EOL . '<br />';
 
 echo "Parcour Postfixe : ";
 $UnArbre->ParcoursPostfixe($UnArbre->val_racine(),' ');
-echo "PHP_EOL";
+echo PHP_EOL . '<br />';
 
 echo "Parcour par niveaux : ";
 $UnArbre->ParcoursParNiveaux($UnArbre->val_racine(),' ');
-echo "PHP_EOL";
+echo PHP_EOL . '<br />';
 ?>

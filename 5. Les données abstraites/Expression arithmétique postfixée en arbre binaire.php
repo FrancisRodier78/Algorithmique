@@ -6,7 +6,7 @@ class CNoeud {
 	private $operateur;
 	private $valeur;
 
-	public function __construct($ope;$val) {
+	public function __construct($ope, $val) {
 		$this->valeur = $val;
 		$this->operateur = $ope;
 		$this->gauche = null;
@@ -47,9 +47,9 @@ class CNoeud {
 
 	public function Traiter($separateur) {
 		if ($this->get_ope() == '0') {
-			echo $this->get_val().separateur;
+			echo $this->get_val().$separateur;
 		} else {
-			echo $this->get_ope().separateur;
+			echo $this->get_ope().$separateur;
 		}
 	}
 }
@@ -61,11 +61,15 @@ class CArbre {
 		$this->racine = null;
 	}
 
+	public function val_racine() {
+	    return $this->racine;
+    }
+
 	public function change_racine(CNoeud $NdCourant) {
 		$this->racine = $NdCourant;
 	}
 
-	public function ParcourPrefixe(CNoeud $NdCourant, $separateur) {
+	public function ParcoursPrefixe(CNoeud $NdCourant, $separateur) {
 		if ($NdCourant != null) {
 			$NdCourant->Traiter($separateur);
 
@@ -79,7 +83,7 @@ class CArbre {
 		}
 	}
 
-	public function ParcourInfixe(CNoeud $NdCourant, $separateur) {
+	public function ParcoursInfixe(CNoeud $NdCourant, $separateur) {
 		if ($NdCourant != null) {
 			echo "(";
 
@@ -97,7 +101,7 @@ class CArbre {
 		}
 	}
 
-	public function ParcourPostfixe(CNoeud $NdCourant, $separateur) {
+	public function ParcoursPostfixe(CNoeud $NdCourant, $separateur) {
 		if ($NdCourant != null) {
 			if ($NdCourant->gauche() != null) {
 				$this->ParcoursPostfixe($NdCourant->gauche(), $separateur);
@@ -111,11 +115,12 @@ class CArbre {
 		}
 	}
 
-	public function ParcourParNiveaux(CNoeud $NdCourant, $separateur) {
+	public function ParcoursParNiveaux(CNoeud $NdCourant, $separateur) {
 		$UneFile = new SplQueue;
 		$UneFile->enqueue($NdCourant);
 
 		while (!$UneFile->isEmpty()) {
+		    $NdCourant = $UneFile->dequeue();
 			$NdCourant->Traiter($separateur);
 
 			if ($NdCourant->gauche() != null) {
@@ -153,13 +158,14 @@ class CArbre {
 $UnePile = new SplStack();
 $UnArbre = new CArbre();
 
-echo "Entrez une notation en polonaise inversée";
-$phrase = trim(fgets(STDIN));
+//echo "Entrez une notation en polonaise inversée";
+//$phrase = trim(fgets(STDIN));
+$phrase = "1 2 - 44 55 + *";
 $nbcaract = strlen($phrase);
 $i = 0;
 
 while ($i < $nbcaract) {
-	$car = $phrase($i);
+	$car = $phrase[$i];
 
 	if (($car >= '0') && ($car <= '9')) {
 		$chiffre = 0;
@@ -173,8 +179,8 @@ while ($i < $nbcaract) {
 		$UnePile->push($NvNoeud);
 	} else if (($car == '+') || ($car == '-') || ($car == '*') || ($car == '/')) {
 		$NvNoeud = new CNoeud($car,0);
-		$NvNoeud->change_droit($UnePile->pop);
-		$NvNoeud->change_gauche($UnePile->pop);
+		$NvNoeud->change_droit($UnePile->pop());
+		$NvNoeud->change_gauche($UnePile->pop());
 		$UnePile->push($NvNoeud);
 	}
 	
@@ -185,20 +191,20 @@ $UnArbre->change_racine($UnePile->pop());
 
 echo "Parcours Préfixé : ";;
 $UnArbre->ParcoursPrefixe($UnArbre->val_racine(), ' ');
-echo PHP_EOL;
+echo PHP_EOL . '<br />';
 
 echo "Parcours Infixé : ";;
 $UnArbre->ParcoursInfixe($UnArbre->val_racine(), ' ');
-echo PHP_EOL;
+echo PHP_EOL . '<br />';
 
 echo "Parcours Postfixé : ";;
 $UnArbre->ParcoursPostfixe($UnArbre->val_racine(), ' ');
-echo PHP_EOL;
+echo PHP_EOL . '<br />';
 
 echo "Parcours par niveaux : ";;
 $UnArbre->ParcoursParNiveaux($UnArbre->val_racine(), ' ');
-echo PHP_EOL;
+echo PHP_EOL . '<br />';
 
 printf("Calcul de l'expression : %5.2f\n", $UnArbre->evaluer($UnArbre->val_racine()));
-echo PHP_EOL;
+echo PHP_EOL . '<br />';
 ?>

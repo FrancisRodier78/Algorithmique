@@ -1,10 +1,10 @@
 <?php
-class CPile
-{
+echo "Exemple de class Pile voir le code."  . '<br />';
+
+class CPile {
 	protected $pile;
 
-	public function __construct()
-	{
+	public function __construct() {
 		$this->pile = array();
 	}
 

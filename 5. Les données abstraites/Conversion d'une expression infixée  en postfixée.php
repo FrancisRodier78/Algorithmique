@@ -2,11 +2,12 @@
 $pileOper = new SplStack();
 $fileExpr = new SplQueue();
 
-echo "Entrez une expression avec des parenthèse";
-
-$phrase = trim(fgets(STDIN));
-$nccaract = strlen($phrase);
-$i ) 0;
+//echo "Entrez une expression avec des parenthèse";
+$phrase = "3*(((12-3)/3)-1)";
+echo "Ceci : " . $phrase . '<br />';
+//$phrase = trim(fgets(STDIN));
+$nbcaract = strlen($phrase);
+$i = 0;
 
 while ($i < $nbcaract) {
 	$car = $phrase[$i];
@@ -17,7 +18,7 @@ while ($i < $nbcaract) {
 
 	if (($car == '+') || ($car == '-') || ($car == '*') || ($car == '/')) {
 		$fileExpr->enqueue(' ');
-		$pileOper->push($acr);
+		$pileOper->push($car);
 	}
 
 	if ($car == ')') {
@@ -33,6 +34,7 @@ while (!$pileOper->isEmpty()) {
 	$fileExpr->enqueue($pileOper->pop());
 }
 
+echo "Donne cela : ";
 while (!$fileExpr->isEmpty()) {
 	echo $fileExpr->dequeue();
 }
