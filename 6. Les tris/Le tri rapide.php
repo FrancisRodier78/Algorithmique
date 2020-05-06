@@ -6,7 +6,7 @@ class CTabvaleurs {
 	private $val_droite;
 
 	public function __construct() {
-		$this->tab_valeur array();
+		$this->tab_valeur = array();
 		$this->nbval = 0;
 		$this->val_gauche = -1;
 		$this->val_droite = -1;
@@ -22,23 +22,25 @@ class CTabvaleurs {
 
 	function droite() {
 		if ($this->val_droite == -1) {
-			$this->val_droite = 0;
+			$this->val_droite = $this->nbval - 1;
 		}
 
 		return $this->val_droite;
 	}
 
 	function chargement() {
-		echo "Entrez une liste.";
-		$saisie = trim(fgets(STDIN));
+		//echo "Entrez une liste.";
+		//$saisie = trim(fgets(STDIN));
+        $saisie = "9 5 7 3 1";
+        echo "Saisie : " . $saisie . '<br />';
 		$this->tab_valeurs = explode(' ', $saisie);
 		$this->nbval = count($this->tab_valeurs);
 	}
 
 	function affichage($debut, $fin) {
-		for ($i=$debut; $i < $fin; $i++) { 
+		for ($i=$debut; $i <= $fin; $i++) {
 			printf("%4d", $this->tab_valeurs[$i]);
-			echo PHP_EOL;
+			echo PHP_EOL . '<br />';
 		}
 	}
 
@@ -59,14 +61,15 @@ class CTabvaleurs {
 			while (((--$j) > $_gauche - 1) && ($this->tab_valeurs[$j] > $clef));
 			if ($i < $j) {
 				$temp = $this->tab_valeurs[$i];
-				$this->tab_valeurs[$i] = $this->tab_valeurs[$j]
+				$this->tab_valeurs[$i] = $this->tab_valeurs[$j];
 				$this->tab_valeurs[$j] = $temp;
 			}
 		}
 
 			$temp = $this->tab_valeurs[$i];
-			$this->tab_valeurs[$i] = $this->tab_valeurs[$j]
-			$this->tab_valeurs[$j] = $temp;
+			$this->tab_valeurs[$i] = $this->tab_valeurs[$_droite];
+			$this->tab_valeurs[$_droite] = $temp;
+
 			return $i;
 	}
 }
