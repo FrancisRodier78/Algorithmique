@@ -1,15 +1,13 @@
 <?php
 // === Classe Cheval ===
-class CCheval
-{
+class CCheval {
 	// Attributs
 	protected $dossard;
 	protected $nom;
 	protected $temps;
 	protected $classement;
 
-	public function __construct($dossard, $nom)
-	{
+	public function __construct($dossard, $nom) {
 		$this->dossard = $dossard;
 		$this->nom = $nom;
 		$this->temps = $temps;
@@ -26,8 +24,7 @@ class CCheval
 // == Programme ===
 $Liste_chevaux = new SplDoublyLinkedList();
 $saisie = "saisie non vide";
-while (!empty($saisie))
-{
+while (!empty($saisie)) {
 	echo "Dossard du cheval (ENTREE pour terminer) : ";
 	$saisie = trim(fgets(STDIN));
 	if (!empty($saisie)) {
